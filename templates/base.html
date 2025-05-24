@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>排课管理</h2>
+<form method="POST">
+  <div class="form-group">
+    <label>周次：<input type="number" name="week" required></label>
+    <label>星期：<select name="day">...</select></label>
+  </div>
+  
+  {% if conflicts %}
+  <div class="alert alert-danger">
+    {{ conflicts | join(', ') }}
+  </div>
+  {% endif %}
+  
+  <button type="submit" class="btn btn-primary">提交排课</button>
+</form>
+{% endblock %}
