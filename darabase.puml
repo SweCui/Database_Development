@@ -17,22 +17,26 @@ package "学生管理模块" {
         班级(class_id)
         入学日期(time_toschool)
         学籍状态(student_status)
+        region_dsj3_4
     }
 
     entity 专业 {
         # 专业名称(major_name)
         学院编号(academy_id)
+        region_dsj3_4
     }
 
     entity 成绩 {
         # 课程名称(course_name)
         成绩(score)
         绩点(gpa)
+        region_dsj3_4
     }
 
     entity 选课记录 {
         # 课程名称(course_name)
         选课时间(select_time)
+        region_dsj3_4
     }
 }
 
@@ -43,10 +47,12 @@ package "教师管理模块" {
         性别(gender)
         职称(work_title)
         * 学院编号(academy_id)
+        region_dsj3_4
     }
 
     entity 学院 {
         # 学院名称(academy_name)
+        region_dsj3_4
     }
 }
 
@@ -57,6 +63,7 @@ package "课程管理模块" {
         学时(hours)
         课程类型(course_type)
         课程性质(course_quality)
+        region_dsj3_4
     }
 }
 
@@ -66,6 +73,7 @@ package "选课系统模块" {
         * 教师工号(teacher_id)
         * 教室编号(classroom_id)
         * 时间段(time_slot)
+        region_dsj3_4
     }
 
     entity 时间段 {
@@ -74,16 +82,19 @@ package "选课系统模块" {
         节次(section)
         开始时间(start_time)
         结束时间(end_time)
+        region_dsj3_4
     }
 
     entity 教室 {
         # 位置(class_where)
         容量(class_big)
         设备(class_equipment)
+        region_dsj3_4
     }
 
     entity 排课班级 {
         # 班级编号(class_id)
+        region_dsj3_4
     }
 }
 
