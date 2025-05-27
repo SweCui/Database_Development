@@ -1,14 +1,11 @@
-from app import db
+import mysql.connector
 
-class 学生(db.Model):
-    学号 = db.Column(db.String(20), primary_key=True)
-    姓名 = db.Column(db.String(50))
-    专业 = db.Column(db.String(50))
-    # 其他字段...
+# 创建数据库连接
+db = mysql.connector.connect(
+    host="localhost",
+    user="root",
+    password="123456",
+    database="date"
+)
 
-class 排课(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    周次 = db.Column(db.Integer)
-    星期 = db.Column(db.Integer)
-    节次 = db.Column(db.Integer)
-    # 其他字段与关系...
+print("数据库连接成功!")

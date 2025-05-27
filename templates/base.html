@@ -1,19 +1,40 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Demo</title>
+  <!-- 请勿在项目正式环境中引用该 layui.css 地址 -->
+  <link href="//unpkg.com/layui@2.11.2/dist/css/layui.css" rel="stylesheet">
+</head>
+<body>
+<ul class="layui-nav">
+  <li class="layui-nav-item layui-this"><a href="">我的</a></li>
+  <li class="layui-nav-item">
+    <a href="javascript:;">课程</a>
+  </li>
+  <li class="layui-nav-item"><a href="">成绩</a></li>
+  <li class="layui-nav-item">
+    <a href="javascript:;">子级</a>
+    <dl class="layui-nav-child">
+      <dd><a href="">菜单1</a></dd>
+      <dd><a href="">菜单2</a></dd>
+      <dd><a href="">菜单3</a></dd>
+    </dl>
+  </li>
+  <li class="layui-nav-item">
+    <a href="javascript:;">选项</a>
+    <dl class="layui-nav-child">
+      <dd><a href="">选项1</a></dd>
+      <dd class="layui-this"><a href="">选项2</a></dd>
+      <dd><a href="">选项3</a></dd>
+    </dl>
+  </li>
+  <li class="layui-nav-item"><a href="">演示</a></li>
+</ul>
+  
+<!-- 请勿在项目正式环境中引用该 layui.js 地址 -->
+<script src="//unpkg.com/layui@2.11.2/dist/layui.js"></script>
 
-{% block content %}
-<h2>排课管理</h2>
-<form method="POST">
-  <div class="form-group">
-    <label>周次：<input type="number" name="week" required></label>
-    <label>星期：<select name="day">...</select></label>
-  </div>
-  
-  {% if conflicts %}
-  <div class="alert alert-danger">
-    {{ conflicts | join(', ') }}
-  </div>
-  {% endif %}
-  
-  <button type="submit" class="btn btn-primary">提交排课</button>
-</form>
-{% endblock %}
+</body>
+</html>

@@ -93,7 +93,8 @@ package "选课系统模块" {
     }
 
     entity 排课班级 {
-        # 班级编号(class_id)
+        # 教室编号(classroom_id)
+        班级编号(class_id)
         region_dsj3_4
     }
 }
