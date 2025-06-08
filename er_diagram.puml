@@ -1,0 +1,144 @@
+@startuml
+skinparam {
+    defaultFontName "宋体"
+    entityBorderColor #333333
+    entityBackgroundColor #F8F9FA
+    classAttributeIconSize 0
+    linetype ortho
+}
+
+package "用户管理模块" {
+    entity 用户 {
+        # 用户ID(id)
+        用户名(username)
+        密码(password)
+        角色(role)
+        真实ID(real_id)
+        创建时间(created_at)
+    }
+    
+    entity 管理员日志 {
+        # 日志ID(id)
+        * 管理员ID(admin_id)
+        操作内容(operation_content)
+        操作时间(operation_time)
+    }
+}
+
+package "学生管理模块" {
+    entity 学生 {
+        # ID(id)
+        学号(student_id)
+        姓名(name)
+        性别(gender)
+        出生日期(birth_date)
+        身份证号(id_card)
+        * 班级ID(class_id)
+        入学日期(enrollment_date)
+        学籍状态(status)
+        地址(address)
+        创建时间(created_at)
+    }
+
+    entity 专业 {
+        # 专业ID(id)
+        专业名称(name)
+        * 学院ID(college_id)
+        描述(description)
+        创建时间(created_at)
+    }
+
+    entity 班级 {
+        # 班级ID(id)
+        班级名称(name)
+        * 专业ID(major_id)
+        年级(grade)
+        描述(description)
+        创建时间(created_at)
+    }
+
+    entity 成绩 {
+        # 成绩ID(id)
+        * 学生ID(student_id)
+        * 教学任务ID(task_id)
+        平时成绩(usual_score)
+        考试成绩(exam_score)
+        最终成绩(final_score)
+        绩点(gpa)
+        评语(comment)
+        录入时间(input_time)
+        * 录入人ID(input_by)
+    }
+}
+
+package "教师管理模块" {
+    entity 学院 {
+        # 学院ID(id)
+        学院名称(name)
+        描述(description)
+        创建时间(created_at)
+    }
+}
+
+package "课程管理模块" {
+    entity 课程 {
+        # ID(id)
+        课程编号(course_id)
+        课程名称(name)
+        学分(credit)
+        学时(hours)
+        * 学院ID(college_id)
+        描述(description)
+        创建时间(created_at)
+    }
+
+    entity 教学任务 {
+        # 任务ID(id)
+        * 课程ID(course_id)
+        学期(semester)
+        班级列表(class_ids)
+        最大学生数(max_students)
+        状态(status)
+        创建时间(created_at)
+    }
+}
+
+package "选课系统模块" {
+    entity 选课记录 {
+        # 记录ID(id)
+        * 学生ID(student_id)
+        * 任务ID(task_id)
+        选课时间(selection_time)
+        状态(status)
+    }
+
+    entity 学籍变更 {
+        # 变更ID(id)
+        * 学生ID(student_id)
+        原状态(old_status)
+        新状态(new_status)
+        * 原班级ID(old_class_id)
+        * 新班级ID(new_class_id)
+        变更原因(reason)
+        变更时间(change_date)
+        * 操作人ID(operator_id)
+    }
+}
+
+' 关系定义
+用户 ||-o{ 管理员日志 : "记录"
+用户 ||-o{ 成绩 : "录入"
+
+学生 ||-o{ 选课记录 : "选择"
+学生 }|--|| 班级 : "属于"
+班级 }|--|| 专业 : "属于"
+专业 }|--|| 学院 : "属于"
+
+课程 ||-o{ 教学任务 : "包含"
+教学任务 ||-o{ 选课记录 : "被选"
+
+选课记录 ||--|| 成绩 : "关联"
+学生 ||-o{ 成绩 : "获得"
+学生 ||-o{ 学籍变更 : "变更"
+
+@enduml 

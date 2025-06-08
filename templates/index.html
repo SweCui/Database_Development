@@ -1,54 +1,66 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <title>登录</title>
-    <!-- LayUI的核心CSS文件 -->
-    <!-- <link rel="stylesheet" href="/css/bootstrap.css"> -->
-    <!-- LayUI的核心CSS文件 -->
-    <link rel="stylesheet" type="text/css" href="layui/css/layui.css"/>
-    <!-- LayUI的核心JS文件（采用模块化引入） --> 
-    <script src="layui/layui.js" type="text/javascript" charset="utf-8"></script>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>教务管理系统</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #1e88e5, #0d47a1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            color: white;
+            text-align: center;
+        }
+        
+        .container {
+            max-width: 600px;
+            padding: 40px;
+        }
+        
+        h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+        
+        p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        .loading {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
 </head>
 <body>
- 
-<form style="width: 400px; margin: 100px auto" method="post">
-    <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label">用户名</label>
-        <input type="text"
-               class="form-control"
-               id="exampleInputEmail1"
-               aria-describedby="emailHelp"
-               name="username"
-        >
+    <div class="container">
+        <h1>教务管理系统</h1>
+        <p>大数据3班第四组 - 数据库课程设计</p>
+        <p>正在跳转到登录页面...</p>
+        <div class="loading"></div>
     </div>
-    <div class="mb-3">
-        <label for="exampleInputPassword1" class="form-label">密码</label>
-        <input type="password"
-               class="form-control"
-               id="exampleInputPassword1"
-               name="password"
-        >
-    </div>
-    <div class="mb-3 form-check">
-        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-        <label class="form-check-label" for="exampleCheck1">记住我</label>
-    </div>
-    <button type="submit" class="btn btn-primary">提交</button>
-
-</form>
-<!-- 你的 HTML 代码 -->
-<!-- LayUI的核心JS文件 -->
-<!-- <script src="./layui/layui.js"></script>
-<script>
-    layui.use(['layer', 'form'], function(){
-      var layer = layui.layer,
-      	  form = layui.form;
-
-      layer.msg('Hello World');
-    });
-</script>  -->
+    
+    <script>
+        // 页面加载后3秒跳转到登录页
+        setTimeout(function() {
+            window.location.href = '/login';
+        }, 3000);
+    </script>
 </body>
-</html>
+</html> 

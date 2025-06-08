@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+{% block title %}编辑个人信息 - 教务管理系统{% endblock %}
+
+{% block navigation %}
+<a href="{{ url_for('student_dashboard') }}">首页</a>
+<a href="{{ url_for('profile_page') }}" class="active">个人信息</a>
+<a href="{{ url_for('student_courses') }}">课程查询</a>
+<a href="{{ url_for('student_grades') }}">成绩查询</a>
+{% endblock %}
+
+{% block content %}
+<div class="layui-card">
+    <div class="layui-card-header">编辑个人信息</div>
+    <div class="layui-card-body">
+        <form class="layui-form" lay-filter="editProfileForm">
+            <div class="layui-form-item">
+                <label class="layui-form-label">学号</label>
+                <div class="layui-input-block">
+                    <input type="text" class="layui-input" value="{{ user_data.student_id }}" readonly>
+                </div>
+            </div>
+            
+            <div class="layui-form-item">
+                <label class="layui-form-label">姓名</label>
+                <div class="layui-input-block">
+                    <input type="text" class="layui-input" value="{{ user_data.name }}" readonly>
+                </div>
+            </div>
+            
+            <div class="layui-form-item">
+                <label class="layui-form-label">性别</label>
+                <div class="layui-input-block">
+                    <input type="text" class="layui-input" value="{{ user_data.gender }}" readonly>
+                </div>
+            </div>
+            
+            <div class="layui-form-item">
+                <label class="layui-form-label">班级</label>
+                <div class="layui-input-block">
+                    <input type="text" class="layui-input" value="{{ user_data.class_name }}" readonly>
+                </div>
+            </div>
+            
+            <div class="layui-form-item">
+                <label class="layui-form-label">专业</label>
+                <div class="layui-input-block">
+                    <input type="text" class="layui-input" value="{{ user_data.major_name }}" readonly>
+                </div>
+            </div>
+            
+            <div class="layui-form-item">
+                <label class="layui-form-label">学院</label>
+                <div class="layui-input-block">
+                    <input type="text" class="layui-input" value="{{ user_data.college_name }}" readonly>
+                </div>
+            </div>
+            
+            <div class="layui-form-item">
+                <label class="layui-form-label">入学年份</label>
+                <div class="layui-input-block">
+                    <input type="text" class="layui-input" value="{{ user_data.enrollment_year }}" readonly>
+                </div>
+            </div>
+            
+            <div class="layui-form-item">
+                <label class="layui-form-label">地址</label>
+                <div class="layui-input-block">
+                    <input type="text" name="address" class="layui-input" value="{{ user_data.address or '' }}" placeholder="请输入地址">
+                </div>
+            </div>
+            
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit lay-filter="editProfile">保存修改</button>
+                    <a href="{{ url_for('profile_page') }}" class="layui-btn layui-btn-primary">返回</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+layui.use(['form', 'layer'], function(){
+    var form = layui.form;
+    var layer = layui.layer;
+    
+    // 监听表单提交
+    form.on('submit(editProfile)', function(data){
+        $.ajax({
+            url: '{{ url_for("edit_profile") }}',
+            type: 'POST',
+            data: data.field,
+            success: function(res){
+                if(res.code === 0){
+                    layer.msg(res.msg, {icon: 1}, function(){
+                        window.location.href = '{{ url_for("profile_page") }}';
+                    });
+                } else {
+                    layer.msg(res.msg, {icon: 2});
+                }
+            },
+            error: function(){
+                layer.msg('服务器错误，请稍后重试', {icon: 2});
+            }
+        });
+        return false;
+    });
+});
+</script>
+{% endblock %} 

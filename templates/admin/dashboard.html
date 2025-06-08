@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% block title %}管理员仪表板 - 教务管理系统{% endblock %}
+
+{% block navigation %}
+<a href="/admin/dashboard"><i class="layui-icon layui-icon-home"></i> 首页</a>
+<a href="/profile"><i class="layui-icon layui-icon-user"></i> 个人信息</a>
+<a href="/admin/students"><i class="layui-icon layui-icon-user"></i> 学生管理</a>
+<a href="/admin/teachers"><i class="layui-icon layui-icon-user"></i> 教师管理</a>
+<a href="/admin/courses"><i class="layui-icon layui-icon-form"></i> 课程管理</a>
+<a href="/import_data"><i class="layui-icon layui-icon-upload"></i> 数据导入</a>
+{% endblock %}
+
+{% block content %}
+<!-- 欢迎面板 -->
+<div class="welcome-panel">
+    <h1>欢迎使用教务管理系统</h1>
+    <p>欢迎回来，{{ user_data.name }}！今天是 {{ current_time }}，祝您使用愉快。</p>
+</div>
+
+<!-- 管理员快速统计 -->
+<div class="quick-stats">
+    <div class="stat-card">
+        <div class="label">学生总数</div>
+        <div class="number">{{ stats.student_count }}</div>
+    </div>
+    <div class="stat-card">
+        <div class="label">教师总数</div>
+        <div class="number">{{ stats.teacher_count }}</div>
+    </div>
+    <div class="stat-card">
+        <div class="label">课程总数</div>
+        <div class="number">{{ stats.course_count }}</div>
+    </div>
+    <div class="stat-card">
+        <div class="label">班级总数</div>
+        <div class="number">{{ stats.class_count }}</div>
+    </div>
+</div>
+
+<!-- 管理员功能卡片 -->
+<div class="features">
+    <div class="feature-card" onclick="location.href='/admin/students'">
+        <i class="layui-icon layui-icon-user"></i>
+        <h3>学生管理</h3>
+        <p>管理学生信息、学籍状态、班级分配等。</p>
+    </div>
+    
+    <div class="feature-card" onclick="location.href='/admin/teachers'">
+        <i class="layui-icon layui-icon-user"></i>
+        <h3>教师管理</h3>
+        <p>管理教师信息、课程安排、教学任务等。</p>
+    </div>
+    
+    <div class="feature-card" onclick="location.href='/admin/courses'">
+        <i class="layui-icon layui-icon-form"></i>
+        <h3>课程管理</h3>
+        <p>管理课程信息、教学计划、课程安排等。</p>
+    </div>
+    
+    <div class="feature-card" onclick="location.href='/import_data'">
+        <i class="layui-icon layui-icon-upload"></i>
+        <h3>数据导入</h3>
+        <p>批量导入学生、教师、课程等数据。</p>
+    </div>
+</div>
+
+<!-- 最近活动 -->
+<div class="recent-activities">
+    <h2>最近活动</h2>
+    <ul class="activity-list">
+        <li class="activity-item">
+            <div class="activity-icon">
+                <i class="layui-icon layui-icon-user"></i>
+            </div>
+            <div class="activity-content">
+                <div class="activity-title">新增学生</div>
+                <div class="activity-time">2024-03-15 10:30</div>
+            </div>
+        </li>
+        <li class="activity-item">
+            <div class="activity-icon">
+                <i class="layui-icon layui-icon-form"></i>
+            </div>
+            <div class="activity-content">
+                <div class="activity-title">课程信息更新</div>
+                <div class="activity-time">2024-03-14 15:45</div>
+            </div>
+        </li>
+        <li class="activity-item">
+            <div class="activity-icon">
+                <i class="layui-icon layui-icon-upload"></i>
+            </div>
+            <div class="activity-content">
+                <div class="activity-title">数据导入</div>
+                <div class="activity-time">2024-03-13 09:20</div>
+            </div>
+        </li>
+    </ul>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    layui.use(['layer', 'util'], function(){
+        var layer = layui.layer;
+        var util = layui.util;
+        
+        // 更新当前日期
+        function updateCurrentDate() {
+            var now = new Date();
+            document.querySelector('.welcome-panel p').innerHTML = 
+                `欢迎回来，{{ user_data.name }}！今天是 ${util.toDateString(now, 'yyyy年MM月dd日')}，祝您使用愉快。`;
+        }
+        
+        // 初始化时更新日期
+        updateCurrentDate();
+        
+        // 每天更新一次日期
+        setInterval(updateCurrentDate, 24 * 60 * 60 * 1000);
+    });
+</script>
+{% endblock %} 

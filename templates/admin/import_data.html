@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数据导入 - 教务管理系统</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/layui@2.9.6/dist/css/layui.css">
+    <style>
+        .import-container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+        .import-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .import-card {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 20px;
+        }
+        .import-form {
+            margin-top: 20px;
+        }
+        .import-tips {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f8f8;
+            border-radius: 4px;
+        }
+        .import-tips h3 {
+            color: #1E9FFF;
+            margin-bottom: 10px;
+        }
+        .import-tips ul {
+            padding-left: 20px;
+        }
+        .import-tips li {
+            margin-bottom: 5px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="import-container">
+        <div class="import-header">
+            <h2>数据导入</h2>
+        </div>
+        
+        <div class="import-card">
+            <form class="layui-form import-form" id="importForm">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">选择表</label>
+                    <div class="layui-input-block">
+                        <select name="table_name" lay-verify="required">
+                            <option value="">请选择要导入的表</option>
+                            <option value="student">学生信息表</option>
+                            <option value="course">课程信息表</option>
+                            <option value="grade">成绩信息表</option>
+                            <option value="college">学院信息表</option>
+                            <option value="major">专业信息表</option>
+                            <option value="class">班级信息表</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="layui-form-item">
+                    <label class="layui-form-label">选择文件</label>
+                    <div class="layui-input-block">
+                        <input type="file" name="file" accept=".xlsx,.xls,.csv" lay-verify="required" class="layui-input">
+                    </div>
+                </div>
+                
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" lay-submit lay-filter="importForm">开始导入</button>
+                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                    </div>
+                </div>
+            </form>
+            
+            <div class="import-tips">
+                <h3>导入说明</h3>
+                <ul>
+                    <li>支持的文件格式：Excel(.xlsx, .xls)和CSV文件</li>
+                    <li>文件大小限制：16MB</li>
+                    <li>请确保Excel/CSV文件的列名与数据库表的字段名完全匹配</li>
+                    <li>日期格式请使用：YYYY-MM-DD</li>
+                    <li>导入过程中请勿关闭页面</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/layui@2.9.6/dist/layui.js"></script>
+    <script>
+        layui.use(['form', 'layer'], function(){
+            var form = layui.form;
+            var layer = layui.layer;
+            
+            // 监听表单提交
+            form.on('submit(importForm)', function(data){
+                var formData = new FormData(document.getElementById('importForm'));
+                
+                // 显示加载提示
+                var loadIndex = layer.msg('正在导入数据...', {icon: 16, shade: 0.3, time: 0});
+                
+                // 发送AJAX请求
+                $.ajax({
+                    url: '/import_data',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(res){
+                        layer.close(loadIndex);
+                        
+                        if(res.code === 0){
+                            layer.msg(res.msg, {icon: 1});
+                        } else {
+                            layer.msg(res.msg, {icon: 2});
+                        }
+                    },
+                    error: function(){
+                        layer.close(loadIndex);
+                        layer.msg('网络错误，请稍后重试', {icon: 2});
+                    }
+                });
+                
+                return false;
+            });
+        });
+    </script>
+</body>
+</html> 

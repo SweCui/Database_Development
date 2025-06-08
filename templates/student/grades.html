@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>成绩查询 - 教务管理系统</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/layui@2.9.6/dist/css/layui.css">
+    <style>
+        .grade-container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+        .grade-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .gpa-summary {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .gpa-value {
+            font-size: 36px;
+            color: #1E9FFF;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .grade-table {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="grade-container">
+        <div class="grade-header">
+            <h2>成绩查询</h2>
+        </div>
+        
+        <!-- GPA汇总 -->
+        <div class="gpa-summary">
+            <div>平均绩点（GPA）</div>
+            <div class="gpa-value">{{ overall_gpa }}</div>
+        </div>
+        
+        <!-- 成绩列表 -->
+        <div class="grade-table">
+            <table class="layui-table">
+                <thead>
+                    <tr>
+                        <th>课程名称</th>
+                        <th>学分</th>
+                        <th>任课教师</th>
+                        <th>学期</th>
+                        <th>平时成绩</th>
+                        <th>考试成绩</th>
+                        <th>最终成绩</th>
+                        <th>绩点</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for grade in grades %}
+                    <tr>
+                        <td>{{ grade.course_name }}</td>
+                        <td>{{ grade.credit }}</td>
+                        <td>{{ grade.teacher_name }}</td>
+                        <td>{{ grade.semester }}</td>
+                        <td>{{ grade.usual_score }}</td>
+                        <td>{{ grade.exam_score }}</td>
+                        <td>{{ grade.final_score }}</td>
+                        <td>{{ grade.gpa }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/layui@2.9.6/dist/layui.js"></script>
+</body>
+</html> 

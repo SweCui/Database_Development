@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block title %}学生仪表板 - 教务管理系统{% endblock %}
+
+{% block navigation %}
+<a href="/student/dashboard"><i class="layui-icon layui-icon-home"></i> 首页</a>
+<a href="/profile"><i class="layui-icon layui-icon-user"></i> 个人信息</a>
+<a href="/student/courses"><i class="layui-icon layui-icon-form"></i> 课程查询</a>
+<a href="/student/grades"><i class="layui-icon layui-icon-chart"></i> 成绩查询</a>
+{% endblock %}
+
+{% block content %}
+<!-- 欢迎面板 -->
+<div class="welcome-panel">
+    <h1>欢迎使用教务管理系统</h1>
+    <p>欢迎回来，{{ user_data.name }}！今天是 {{ current_time }}，祝您学习愉快。</p>
+</div>
+
+<!-- 学生功能卡片 -->
+<div class="features">
+    <div class="feature-card" onclick="location.href='/student/courses'">
+        <i class="layui-icon layui-icon-form"></i>
+        <h3>课程查询</h3>
+        <p>查看本学期课程安排、选课信息等。</p>
+    </div>
+    
+    <div class="feature-card" onclick="location.href='/student/grades'">
+        <i class="layui-icon layui-icon-chart"></i>
+        <h3>成绩查询</h3>
+        <p>查看历史成绩、绩点统计等。</p>
+    </div>
+    
+    <div class="feature-card" onclick="location.href='/profile'">
+        <i class="layui-icon layui-icon-user"></i>
+        <h3>个人信息</h3>
+        <p>查看和修改个人基本信息。</p>
+    </div>
+</div>
+
+<!-- 最近活动 -->
+<div class="recent-activities">
+    <h2>最近活动</h2>
+    <ul class="activity-list">
+        <li class="activity-item">
+            <div class="activity-icon">
+                <i class="layui-icon layui-icon-form"></i>
+            </div>
+            <div class="activity-content">
+                <div class="activity-title">选课成功</div>
+                <div class="activity-time">2024-03-15 10:30</div>
+            </div>
+        </li>
+        <li class="activity-item">
+            <div class="activity-icon">
+                <i class="layui-icon layui-icon-chart"></i>
+            </div>
+            <div class="activity-content">
+                <div class="activity-title">成绩更新</div>
+                <div class="activity-time">2024-03-14 15:45</div>
+            </div>
+        </li>
+        <li class="activity-item">
+            <div class="activity-icon">
+                <i class="layui-icon layui-icon-user"></i>
+            </div>
+            <div class="activity-content">
+                <div class="activity-title">个人信息更新</div>
+                <div class="activity-time">2024-03-13 09:20</div>
+            </div>
+        </li>
+    </ul>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    layui.use(['layer', 'util'], function(){
+        var layer = layui.layer;
+        var util = layui.util;
+        
+        // 更新当前日期
+        function updateCurrentDate() {
+            var now = new Date();
+            document.querySelector('.welcome-panel p').innerHTML = 
+                `欢迎回来，{{ user_data.name }}！今天是 ${util.toDateString(now, 'yyyy年MM月dd日')}，祝您学习愉快。`;
+        }
+        
+        // 初始化时更新日期
+        updateCurrentDate();
+        
+        // 每天更新一次日期
+        setInterval(updateCurrentDate, 24 * 60 * 60 * 1000);
+    });
+</script>
+{% endblock %} 
